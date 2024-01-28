@@ -2,13 +2,12 @@ from ultralytics import YOLO
 import time
 import streamlit as st
 import cv2
-from pytube import YouTube
 from tinydb import TinyDB, Query
-
+import os
+from datetime import datetime
 import utils.settings as settings
 
 db = TinyDB(settings.DATABASE)
-detection_results_table = db.table('results')
 
 def load_model(model_path):
     """
@@ -127,8 +126,7 @@ def play_video(conf, model, video_path):
         else:
             vid_cap.release()
             break
-import os
-from datetime import datetime
+
 
 def video_clsifiction(conf, model):
     """
@@ -145,6 +143,7 @@ def video_clsifiction(conf, model):
         None
     """
     uploaded_file = st.sidebar.file_uploader("Upload a video...", type=["mp4", "avi", "mov"])
+    
     if uploaded_file is not None:
         video_path = f"uploaded_video.{uploaded_file.name.split('.')[-1]}"
         with open(video_path, 'wb') as video_file:
@@ -161,14 +160,18 @@ def video_clsifiction(conf, model):
         st.video(video_bytes)
 
     # Create a folder to save snapshots
-    snapshots_folder = "snapshots"
+    video_name = os.path.splitext(os.path.basename(video_path))[0]
+    snapshots_folder = f"snapshots/{video_name}"
     os.makedirs(snapshots_folder, exist_ok=True)
+
+    detection_results_table = db.table(f'results{uploaded_file.name}')
 
     if st.sidebar.button('Detect Video Objects'):
         try:
             vid_cap = cv2.VideoCapture(video_path)
             st_frame = st.empty()
-            
+            video_timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+
             while vid_cap.isOpened():
                 success, image = vid_cap.read()
                 if success:
@@ -189,10 +192,10 @@ def video_clsifiction(conf, model):
 
                         # Save snapshot path and timestamp to TinyDB
                         detection_results_table.insert({
+                            'video_name': video_name,
                             'timestamp': timestamp,
                             'snapshot_path': snapshot_path
                         })
-
 
                 else:
                     vid_cap.release()

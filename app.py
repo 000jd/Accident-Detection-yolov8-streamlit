@@ -1,6 +1,8 @@
+import json
 from pathlib import Path
 import PIL
 import streamlit as st
+from tinydb import TinyDB
 import utils.settings as settings
 import utils.helper as helper
 
@@ -105,20 +107,32 @@ if page == "Detection":
     elif source_radio == settings.RTSP:
         helper.play_rtsp_stream(confidence, model)
 
-    elif source_radio == settings.YOUTUBE:
-        helper.play_youtube_video(confidence, model)
-
     else:
         st.error("Please select a valid source type!")
 
 elif page == "Results":
-    st.title("Detection Results")
+    # Load detection results from the JSON file
+    save_results_path = settings.DATABASE
 
-    # Load detection results from the text file
-    save_results_path = "detection.txt"
     try:
-        with open(save_results_path, "r") as results_file:
-            detection_results = results_file.read()
-            st.text_area("Detection Results:", detection_results)
+        with open(save_results_path, 'r') as json_file:
+            detection_results = json.load(json_file)
     except FileNotFoundError:
+        st.warning("No detection results found. Please run the detection first.")
+        detection_results = {}
+
+    if detection_results:
+        st.write("## Detection Results")
+
+        for video_name, results in detection_results.items():
+            st.write(f"### {video_name}")
+            
+            # Display results for each video
+            for result_id, result_details in results.items():
+                st.write(f"#### Detection {result_id}")
+                st.image(result_details["snapshot_path"], caption=f"Snapshot {result_id}", use_column_width=True)
+                st.write(f"Timestamp: {result_details['timestamp']}")
+                st.write(f"Video Name: {result_details['video_name']}")
+                st.write("---")
+    else:
         st.warning("No detection results found. Please run the detection first.")

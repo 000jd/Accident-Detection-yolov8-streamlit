@@ -1,16 +1,126 @@
 {
-    "results": {
+    "resultsistockphoto-948767230-640_adpp_is.mp4": {
         "1": {
-            "timestamp": "20240128144440",
-            "snapshot_path": "snapshots/snapshot_20240128144440.png"
+            "video_name": "uploaded_video",
+            "timestamp": "20240128180449",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128180449.png"
         },
         "2": {
-            "timestamp": "20240128144442",
-            "snapshot_path": "snapshots/snapshot_20240128144442.png"
+            "video_name": "uploaded_video",
+            "timestamp": "20240128180451",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128180451.png"
         },
         "3": {
-            "timestamp": "20240128144443",
-            "snapshot_path": "snapshots/snapshot_20240128144443.png"
+            "video_name": "uploaded_video",
+            "timestamp": "20240128180452",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128180452.png"
+        },
+        "4": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181505",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181505.png"
+        },
+        "5": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181506",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181506.png"
+        },
+        "6": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181506",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181506.png"
+        },
+        "7": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181507",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181507.png"
+        },
+        "8": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181507",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181507.png"
+        },
+        "9": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181508",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181508.png"
+        },
+        "10": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181508",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181508.png"
+        },
+        "11": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181509",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181509.png"
+        },
+        "12": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181510",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181510.png"
+        },
+        "13": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181510",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181510.png"
+        },
+        "14": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181511",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181511.png"
+        },
+        "15": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181514",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181514.png"
+        },
+        "16": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128181515",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128181515.png"
+        }
+    },
+    "resultsdetection_clip.avi": {
+        "1": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182047",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182047.png"
+        },
+        "2": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182048",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182048.png"
+        },
+        "3": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182048",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182048.png"
+        },
+        "4": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182050",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182050.png"
+        },
+        "5": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182051",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182051.png"
+        },
+        "6": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182051",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182051.png"
+        },
+        "7": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182052",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182052.png"
+        },
+        "8": {
+            "video_name": "uploaded_video",
+            "timestamp": "20240128182053",
+            "snapshot_path": "snapshots/uploaded_video/snapshot_20240128182053.png"
         }
     }
 }

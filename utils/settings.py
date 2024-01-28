@@ -39,7 +39,7 @@ VIDEO_DIR = ROOT / 'videos'
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
 
-DATABASE = ROOT / 'database' /'data.json'
+DATABASE = (ROOT.parent / 'database' / 'data.json').resolve()
 
 # Webcam
 #WEBCAM_PATH = 0
