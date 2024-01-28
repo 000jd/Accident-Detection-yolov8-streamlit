@@ -39,7 +39,7 @@ VIDEO_DIR = ROOT / 'videos'
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
 
-DATABASE = ROOT / 'data.json'
+DATABASE = ROOT / 'database' /'data.json'
 
 # Webcam
 #WEBCAM_PATH = 0

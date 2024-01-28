@@ -7,8 +7,8 @@ from tinydb import TinyDB, Query
 
 import utils.settings as settings
 
-db = TinyDB('detection_results.json')
-detection_results_table = db.table('detection_results')
+db = TinyDB(settings.DATABASE)
+detection_results_table = db.table('results')
 
 def load_model(model_path):
     """
@@ -127,6 +127,8 @@ def play_video(conf, model, video_path):
         else:
             vid_cap.release()
             break
+import os
+from datetime import datetime
 
 def video_clsifiction(conf, model):
     """
@@ -158,8 +160,43 @@ def video_clsifiction(conf, model):
     if video_bytes:
         st.video(video_bytes)
 
+    # Create a folder to save snapshots
+    snapshots_folder = "snapshots"
+    os.makedirs(snapshots_folder, exist_ok=True)
+
     if st.sidebar.button('Detect Video Objects'):
         try:
-            play_video(conf, model, video_path)
+            vid_cap = cv2.VideoCapture(video_path)
+            st_frame = st.empty()
+            
+            while vid_cap.isOpened():
+                success, image = vid_cap.read()
+                if success:
+                    # Resize the image to a standard size
+                    image_resized = cv2.resize(image, (720, int(720*(9/16))))
+
+                    # Display the detected objects on the video frame
+                    res = model.predict(image_resized, conf=conf)
+                    res_plotted = res[0].plot()
+                    st_frame.image(res_plotted, caption='Detected Video', channels="BGR", use_column_width=True)
+
+                    # Check if any object is detected
+                    if len(res[0].boxes) > 0:
+                        # Save snapshot
+                        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                        snapshot_path = os.path.join(snapshots_folder, f"snapshot_{timestamp}.png")
+                        cv2.imwrite(snapshot_path, cv2.cvtColor(image_resized, cv2.COLOR_BGR2RGB))
+
+                        # Save snapshot path and timestamp to TinyDB
+                        detection_results_table.insert({
+                            'timestamp': timestamp,
+                            'snapshot_path': snapshot_path
+                        })
+
+
+                else:
+                    vid_cap.release()
+                    break
         except Exception as e:
-            st.sidebar.error("Error loading video: " + str(e))
+            vid_cap.release()
+            st.sidebar.error("Error processing video: " + str(e))

@@ -1,0 +1,16 @@
+{
+    "results": {
+        "1": {
+            "timestamp": "20240128144440",
+            "snapshot_path": "snapshots/snapshot_20240128144440.png"
+        },
+        "2": {
+            "timestamp": "20240128144442",
+            "snapshot_path": "snapshots/snapshot_20240128144442.png"
+        },
+        "3": {
+            "timestamp": "20240128144443",
+            "snapshot_path": "snapshots/snapshot_20240128144443.png"
+        }
+    }
+}
