@@ -30,15 +30,13 @@ This project utilizes YOLOv8 (You Only Look Once) object detection model combine
     pip install streamlit opencv-python tinydb
     ```
 
-2. Download YOLOv8 model weights from the [YOLOv5 GitHub releases](https://github.com/ultralytics/yolov5/releases).
-
-3. Run the Streamlit app:
+2. Run the Streamlit app:
 
     ```bash
     streamlit run app.py
     ```
 
-4. Open your web browser and navigate to the provided URL.
+3. Open your web browser and navigate to the provided URL.
 
 ## Folder Structure
 
