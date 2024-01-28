@@ -17,28 +17,29 @@ ROOT = root_path.relative_to(Path.cwd())
 # Sources
 IMAGE = 'Image'
 VIDEO = 'Video'
-WEBCAM = 'Webcam'
 RTSP = 'RTSP'
 YOUTUBE = 'YouTube'
 
-SOURCES_LIST = [IMAGE, VIDEO, WEBCAM, RTSP, YOUTUBE]
+SOURCES_LIST = [IMAGE, VIDEO, RTSP, YOUTUBE]
 
 # Images config
 IMAGES_DIR = ROOT / 'images'
 DEFAULT_IMAGE = IMAGES_DIR / 'test.jpg'
-DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'test_detected.jpg'
+DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'test_detat.jpg'
 
 # Videos config
 VIDEO_DIR = ROOT / 'videos'
-VIDEO_1_PATH = VIDEO_DIR / 'video_1.mp4'
+#VIDEO_1_PATH = VIDEO_DIR / 'video_1.mp4'
 
-VIDEOS_DICT = {
-    'video_1': VIDEO_1_PATH,
-}
+#VIDEOS_DICT = {
+#    'video_1': VIDEO_1_PATH,
+#}
 
 # ML Model config
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
 
+DATABASE = ROOT / 'data.json'
+
 # Webcam
-WEBCAM_PATH = 0
+#WEBCAM_PATH = 0

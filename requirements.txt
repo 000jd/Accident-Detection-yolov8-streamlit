@@ -1,2 +1,3 @@
 ultralytics==8.1.5
 pytube==15.0.0
+tinydb==4.7.1
