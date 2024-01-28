@@ -18,9 +18,8 @@ ROOT = root_path.relative_to(Path.cwd())
 IMAGE = 'Image'
 VIDEO = 'Video'
 RTSP = 'RTSP'
-YOUTUBE = 'YouTube'
 
-SOURCES_LIST = [IMAGE, VIDEO, RTSP, YOUTUBE]
+SOURCES_LIST = [IMAGE, VIDEO, RTSP]
 
 # Images config
 IMAGES_DIR = ROOT / 'images'

@@ -5,6 +5,7 @@ import streamlit as st
 from tinydb import TinyDB
 import utils.settings as settings
 import utils.helper as helper
+import pandas as pd
 
 st.set_page_config(
     page_title="Accident Detection",
@@ -101,6 +102,7 @@ if page == "Detection":
                                 st.write(box.data)
                     except Exception as ex:
                         st.write("No image is uploaded yet!")
+                        
     elif source_radio == settings.VIDEO:
         helper.video_clsifiction(confidence, model)
 
@@ -126,13 +128,21 @@ elif page == "Results":
 
         for video_name, results in detection_results.items():
             st.write(f"### {video_name}")
-            
+
+            # Create an HTML table with image columns for each result
+            html_table = "<table><tr>"
+
             # Display results for each video
             for result_id, result_details in results.items():
-                st.write(f"#### Detection {result_id}")
-                st.image(result_details["snapshot_path"], caption=f"Snapshot {result_id}", use_column_width=True)
-                st.write(f"Timestamp: {result_details['timestamp']}")
-                st.write(f"Video Name: {result_details['video_name']}")
-                st.write("---")
+                html_table += f"<td><img src='{result_details['snapshot_path']}' alt='Snapshot {result_id}' width='200'/><br>"
+                html_table += f"Timestamp: {result_details['timestamp']}<br>Video Name: {result_details['video_name']}</td>"
+
+            html_table += "</tr></table>"
+            
+            # Display the HTML table
+            st.markdown(html_table, unsafe_allow_html=True)
+
+            st.write("---")
     else:
         st.warning("No detection results found. Please run the detection first.")
+

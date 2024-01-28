@@ -4,6 +4,8 @@ import streamlit as st
 import cv2
 from tinydb import TinyDB, Query
 import os
+import re
+import ast
 from datetime import datetime
 import utils.settings as settings
 
@@ -183,6 +185,15 @@ def video_clsifiction(conf, model):
                     res_plotted = res[0].plot()
                     st_frame.image(res_plotted, caption='Detected Video', channels="BGR", use_column_width=True)
 
+                    res_string = str(res[0])
+                    match = re.search(r'names: {.*?}', res_string)
+                    extracted_part = match.group()
+                    match2 = re.search(r'{.*?}', extracted_part)
+                    extracted_part2 = match2.group()
+                    result_dict = ast.literal_eval(extracted_part2)
+
+                    if match:
+                        extracted_part = match.group()
                     # Check if any object is detected
                     if len(res[0].boxes) > 0:
                         # Save snapshot
@@ -194,7 +205,8 @@ def video_clsifiction(conf, model):
                         detection_results_table.insert({
                             'video_name': video_name,
                             'timestamp': timestamp,
-                            'snapshot_path': snapshot_path
+                            'snapshot_path': snapshot_path,
+                            'class_and_vacales':result_dict,
                         })
 
                 else:
