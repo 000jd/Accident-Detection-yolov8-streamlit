@@ -44,7 +44,3 @@ This project utilizes YOLOv8 (You Only Look Once) object detection model combine
 
 - 📁 **database**: Stores detection results in JSON format.
 - 📁 **snapshots**: Contains captured snapshots of detected frames.
-
-## Contributing
-
-Contributions are welcome! If you encounter any issues or have suggestions, feel free to open an issue or create a pull request.
