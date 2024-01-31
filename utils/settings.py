@@ -28,17 +28,10 @@ DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'test_detat.jpg'
 
 # Videos config
 VIDEO_DIR = ROOT / 'videos'
-#VIDEO_1_PATH = VIDEO_DIR / 'video_1.mp4'
-
-#VIDEOS_DICT = {
-#    'video_1': VIDEO_1_PATH,
-#}
+SNAPSHOTS = (ROOT.parent / 'snapshots').resolve()
 
 # ML Model config
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
 
 DATABASE = (ROOT.parent / 'database' / 'data.json').resolve()
-
-# Webcam
-#WEBCAM_PATH = 0

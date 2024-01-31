@@ -22,7 +22,6 @@ st.sidebar.header("Navigation")
 # Navigation options
 page = st.sidebar.radio("Go to", ["Detection", "Results"])
 
-
 # Main content
 if page == "Detection":
     #st.title("Accident Detection")
@@ -90,6 +89,7 @@ if page == "Detection":
                     res_plotted = res[0].plot()[:, :, ::-1]
                     st.image(res_plotted, caption='Detected Image',
                             use_column_width=True)
+                    
                     # Save detection results to a text file
                     save_results_path = "detection.txt"
                     with open(save_results_path, "w") as results_file:
@@ -127,22 +127,42 @@ elif page == "Results":
         st.write("## Detection Results")
 
         for video_name, results in detection_results.items():
-            st.write(f"### {video_name}")
+            # Create lists to store data for the table
+            video_names = []
+            timestamps = []
+            image_paths = []
 
-            # Create an HTML table with image columns for each result
-            html_table = "<table><tr>"
-
-            # Display results for each video
             for result_id, result_details in results.items():
-                html_table += f"<td><img src='{result_details['snapshot_path']}' alt='Snapshot {result_id}' width='200'/><br>"
-                html_table += f"Timestamp: {result_details['timestamp']}<br>Video Name: {result_details['video_name']}</td>"
+                # Append data to lists
+                video_names.append(result_details['video_name'])
+                timestamps.append(result_details['timestamp'])
+                image_paths.append(result_details['snapshot_path'])
 
-            html_table += "</tr></table>"
-            
-            # Display the HTML table
-            st.markdown(html_table, unsafe_allow_html=True)
+            # Create a DataFrame for the table
+            table_data = {'Video Name': video_names, 'Timestamp': timestamps}
+            df = pd.DataFrame(table_data)
 
-            st.write("---")
+            # Use st.columns to create a three-column layout
+            col1, col2= st.columns(2)
+
+            # Display the table in the first column
+            with col1:
+                st.write("### Table")
+                st.table(df)
+
+            # Display the images in the second and third columns
+            with col2:
+                st.write("### Images ")
+                sub_c1, sub_c2 = st.columns(2)
+                with sub_c1:
+                    for i in range(0, len(image_paths), 3):
+                        st.image(image_paths[i], width=200)
+
+                with sub_c2:
+                    for i in range(1, len(image_paths), 3):
+                        st.image(image_paths[i], width=200)
     else:
         st.warning("No detection results found. Please run the detection first.")
+
+
 

@@ -4,10 +4,9 @@ import streamlit as st
 import cv2
 from tinydb import TinyDB, Query
 import os
-import re
-import ast
 from datetime import datetime
 import utils.settings as settings
+import utils.notifiction as sos
 
 db = TinyDB(settings.DATABASE)
 
@@ -22,8 +21,8 @@ def load_model(model_path):
         A YOLO object detection model.
     """
     model = YOLO(model_path)
+    model.classes = ["Accident"]
     return model
-
 
 def display_tracker_options():
     display_tracker = st.radio("Display Tracker", ('Yes', 'No'))
@@ -163,16 +162,18 @@ def video_clsifiction(conf, model):
 
     # Create a folder to save snapshots
     video_name = os.path.splitext(os.path.basename(video_path))[0]
-    snapshots_folder = f"snapshots/{video_name}"
+    snapshots_folder = f"{settings.SNAPSHOTS}/{video_name}"
     os.makedirs(snapshots_folder, exist_ok=True)
 
-    detection_results_table = db.table(f'results{uploaded_file.name}')
+    detection_results_table_name = f'results_{uploaded_file.name}'
+    detection_results_table = db.table(detection_results_table_name)
 
     if st.sidebar.button('Detect Video Objects'):
         try:
             vid_cap = cv2.VideoCapture(video_path)
             st_frame = st.empty()
-            video_timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+
+            counter = 0
 
             while vid_cap.isOpened():
                 success, image = vid_cap.read()
@@ -185,29 +186,26 @@ def video_clsifiction(conf, model):
                     res_plotted = res[0].plot()
                     st_frame.image(res_plotted, caption='Detected Video', channels="BGR", use_column_width=True)
 
-                    res_string = str(res[0])
-                    match = re.search(r'names: {.*?}', res_string)
-                    extracted_part = match.group()
-                    match2 = re.search(r'{.*?}', extracted_part)
-                    extracted_part2 = match2.group()
-                    result_dict = ast.literal_eval(extracted_part2)
-
-                    if match:
-                        extracted_part = match.group()
                     # Check if any object is detected
                     if len(res[0].boxes) > 0:
-                        # Save snapshot
-                        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                        # Saveing  snapshot
+                        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         snapshot_path = os.path.join(snapshots_folder, f"snapshot_{timestamp}.png")
                         cv2.imwrite(snapshot_path, cv2.cvtColor(image_resized, cv2.COLOR_BGR2RGB))
 
-                        # Save snapshot path and timestamp to TinyDB
+                        if counter < 3 and counter < 1:
+                            #sending emergency email 
+                            sos.send_emergency_email(video_name, timestamp, snapshot_path)
+
+                        # Saveing snapshot path and timestamp to TinyDB
                         detection_results_table.insert({
                             'video_name': video_name,
                             'timestamp': timestamp,
                             'snapshot_path': snapshot_path,
-                            'class_and_vacales':result_dict,
+                            'class_and_vacales': res[0].names[0],
                         })
+
+                        counter += 1
 
                 else:
                     vid_cap.release()
