@@ -193,9 +193,10 @@ def video_clsifiction(conf, model):
                         snapshot_path = os.path.join(snapshots_folder, f"snapshot_{timestamp}.png")
                         cv2.imwrite(snapshot_path, cv2.cvtColor(image_resized, cv2.COLOR_BGR2RGB))
 
-                        if counter < 3 and counter < 1:
-                            #sending emergency email 
-                            sos.send_emergency_email(video_name, timestamp, snapshot_path)
+                        if counter <= 5:
+                            #sending emergency email
+                            pass 
+                            #sos.send_emergency_email(video_name, timestamp, snapshot_path)
 
                         # Saveing snapshot path and timestamp to TinyDB
                         detection_results_table.insert({

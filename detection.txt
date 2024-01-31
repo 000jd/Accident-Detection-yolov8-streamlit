@@ -59,4 +59,4 @@ orig_shape: (720, 1280)
 path: ''
 probs: None
 save_dir: None
-speed: {'preprocess': 3.8530826568603516, 'inference': 391.8015956878662, 'postprocess': 0.8342266082763672})
+speed: {'preprocess': 10.510921478271484, 'inference': 424.6408939361572, 'postprocess': 1.3573169708251953})

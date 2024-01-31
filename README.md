@@ -19,15 +19,25 @@ This project utilizes YOLOv8 (You Only Look Once) object detection model combine
 ## Prerequisites
 
 - Python 3.x
-- Required Python packages: `streamlit`, `opencv-python`, `tinydb`, `ultralytics`
+- Required Python packages: `streamlit`, `opencv-python`, `tinydb`, `ultralytics`, `python-dotenv`, `secure-smtplib`
 - Finetuned YOLOv8 model weights (are included or download from [YOLO website](https://github.com/ultralytics/yolov5/releases))
+
+## Demo
+
+### Home page
+
+<img src="https://github.com/000jd/Accident-Detection-yolov8-streamlit/demo/Accident-Detection.jpeg" >
+
+### Result Page 
+
+<img src="https://github.com/000jd/Accident-Detection-yolov8-streamlit/demo/Accident-Detection (1).jpeg" >
 
 ## Usage
 
 1. Install the required Python packages:
 
     ```bash
-    pip install streamlit opencv-python tinydb
+    pip install -r requirements.txt
     ```
 
 2. Run the Streamlit app:
