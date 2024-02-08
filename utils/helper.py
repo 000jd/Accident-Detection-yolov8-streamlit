@@ -195,8 +195,10 @@ def video_clsifiction(conf, model):
 
                         if counter <= 5:
                             #sending emergency email
-                            pass 
-                            #sos.send_emergency_email(video_name, timestamp, snapshot_path)
+                            try:
+                                sos.send_emergency_email(video_name, timestamp, snapshot_path)
+                            except Exception as e:
+                                pass 
 
                         # Saveing snapshot path and timestamp to TinyDB
                         detection_results_table.insert({

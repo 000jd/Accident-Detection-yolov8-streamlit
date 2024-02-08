@@ -113,9 +113,8 @@ if page == "Detection":
         st.error("Please select a valid source type!")
 
 elif page == "Results":
-
-    st.sidebar.info("This is the Results page. Individual tables will be displayed for each video.")
     
+    st.sidebar.info("This is the Results page. Individual tables will be displayed for each video.")
     # Load detection results from the JSON file
     save_results_path = settings.DATABASE
 
