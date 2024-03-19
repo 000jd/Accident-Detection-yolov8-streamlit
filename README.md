@@ -50,5 +50,20 @@ This project utilizes YOLOv8 (You Only Look Once) object detection model combine
 
 ## Folder Structure
 
+- 📁 **app.py**: Main application file.
 - 📁 **database**: Stores detection results in JSON format.
+  - 📄 data.json: JSON file containing detection results.
+- 📁 **demo**: Contains demonstration images.
+  - 🖼️ **Accident-Detection (1).png**: Demo image 1.
+  - 🖼️ **Accident-Detection.png**: Demo image 2.
+- 📁 **requirements.txt**: Text file listing project dependencies.
 - 📁 **snapshots**: Contains captured snapshots of detected frames.
+- 📁 **utils**: Contains utility files.
+  - 📁 **images**: Contains additional images for testing.
+    - 🖼️ **test_detat.jpg**: Test image.
+    - 🖼️ **test.jpg**: Test image.
+  - 📄 **helper.py**: Helper functions module.
+  - 📄 **notifiction.py**: Notification functions module.
+  - 📄 **settings.py**: Settings module containing configurations.
+  - 📁 **weights**: Contains pre-trained model weights.
+
