@@ -26,11 +26,11 @@ This project utilizes YOLOv8 (You Only Look Once) object detection model combine
 
 ### Home page
 
-<img src="https://github.com/000jd/Accident-Detection-yolov8-streamlit/blob/main/demo/Accident-Detection.jpeg" >
+<img src="https://github.com/000jd/Accident-Detection-yolov8-streamlit/blob/main/demo/Accident-Detection.png" >
 
 ### Result Page 
 
-<img src="https://github.com/000jd/Accident-Detection-yolov8-streamlit/blob/main/demo/Accident-Detection%20(1).jpeg" >
+<img src="https://github.com/000jd/Accident-Detection-yolov8-streamlit/blob/main/demo/Accident-Detection%20(1).png" >
 
 ## Usage
 
