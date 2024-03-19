@@ -146,7 +146,7 @@ class AccidentDetectionHelper:
             ip_cam_url = st.sidebar.text_input("Enter IP Addres URL:")
             if not ip_cam_url:
                 st.sidebar.info("Please enter the IP Addres URL.")
-                return ip_cam_url
+                return 
 
             # Functionality for IP A
             try:

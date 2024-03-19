@@ -122,7 +122,7 @@ class AccidentDetectionApp:
                                     use_column_width=True)
 
                             try:
-                                with st.expander(f"Detection Persons {len(boxes)}"):
+                                with st.expander(f"Detection {len(boxes)}"):
                                     for box in boxes:
                                         st.write(box.data)
                             except Exception as ex:
