@@ -1,5 +1,3 @@
 ultralytics==8.1.5
-tinydb==4.7.1
-secure-smtplib==0.1.1
-python-dotenv==1.0.1
 streamlit
+supervision==0.18.0
