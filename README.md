@@ -20,7 +20,6 @@ This project utilizes YOLOv8 (You Only Look Once) object detection model combine
 
 - Python 3.x
 - Required Python packages: `streamlit`, `opencv-python`, `tinydb`, `ultralytics`, `python-dotenv`, `secure-smtplib`
-- Finetuned YOLOv8 model weights (are included or download from [YOLO website](https://github.com/ultralytics/yolov5/releases))
 
 ## Demo
 
