@@ -73,23 +73,24 @@ class AccidentDetectionHelper:
             return is_display_tracker, tracker_type
         return is_display_tracker, None
 
-    def _display_detected_frames(self, conf, model, st_frame, image, is_display_tracking=None, tracker=None):
+    def _display_detected_frames(self, conf, model, st_frame, image, video_id, is_display_tracking=None, tracker=None):
         """
         Display the detected objects on a video frame using the YOLOv8 model.
 
         Args:
-        - conf (float): Confidence threshold for object detection.
-        - model (YoloV8): A YOLOv8 object detection model.
-        - st_frame (Streamlit object): A Streamlit object to display the detected video.
-        - image (numpy array): A numpy array representing the video frame.
-        - is_display_tracking (bool): A flag indicating whether to display object tracking (default=None).
+            - conf (float): Confidence threshold for object detection.
+            - model (YoloV8): A YOLOv8 object detection model.
+            - st_frame (Streamlit object): A Streamlit object to display the detected video.
+            - image (numpy array): A numpy array representing the video frame.
+            - video_id (str): Unique ID for the video.
+            - is_display_tracking (bool): A flag indicating whether to display object tracking (default=None).
 
         Returns:
-        None
+            None
         """
 
         # Resize the image to a standard size
-        image_resized = cv2.resize(image, (720, int(720*(9/16))))
+        image_resized = cv2.resize(image, (720, int(720 * (9 / 16))))
 
         # Display object tracking, if specified
         if is_display_tracking:
@@ -100,19 +101,33 @@ class AccidentDetectionHelper:
         # Filter detections for class ID 0
         filtered_result = self.filter_detection(res, class_ids=self.settings.CLASS_IDS)
 
-        # counts the number of detactions
+        # counts the number of detections
         self.total_detections = len(filtered_result)
-        
+
         # Draw filtered detections on the image
         for detection in filtered_result.xyxy:
             x1, y1, x2, y2 = map(int, detection)
-            cv2.rectangle(image_resized, (x1, y1), (x2, y2), self.settings.COUSTOM_COLOR, thickness=self.settings.THICKNESS)
-            
+            cv2.rectangle(image_resized, (x1, y1), (x2, y2), self.settings.COUSTOM_COLOR,
+                        thickness=self.settings.THICKNESS)
+
         st_frame.image(image_resized,
                     caption=f'Detected Video (Total Detections: {self.total_detections})',
                     channels="BGR",
                     use_column_width=True
                     )
+
+        # Save detection results to the database
+        if filtered_result:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            for detection in filtered_result.xyxy:
+                snapshot_path = os.path.join(self.settings.SNAPSHOTS, video_id, f"snapshot_{timestamp}.png")
+                cv2.imwrite(snapshot_path, cv2.cvtColor(image_resized, cv2.COLOR_BGR2RGB))
+                self.db.insert({
+                    'video_id': video_id,
+                    'timestamp': timestamp,
+                    'snapshot_path': snapshot_path,
+                    'class_and_vacales': res[0].names[0],
+                })
 
     def cctv_camera_classification(self, conf, model):
         """
@@ -131,20 +146,26 @@ class AccidentDetectionHelper:
             ip_cam_url = st.sidebar.text_input("Enter IP Addres URL:")
             if not ip_cam_url:
                 st.sidebar.info("Please enter the IP Addres URL.")
-                return
-            
+                return ip_cam_url
+
             # Functionality for IP A
             try:
                 vid_cap = cv2.VideoCapture(ip_cam_url)
+                if not vid_cap.isOpened():
+                    st.sidebar.error("Error loading video: Unable to connect to the IP camera.")
+                    return
                 st_frame = st.empty()
                 is_display_tracker, tracker = self.display_tracker_options()
                 while vid_cap.isOpened():
                     success, image = vid_cap.read()
                     if success:
+                        # Generate a unique ID for the video
+                        video_id = self.generate_video_id()
                         self._display_detected_frames(conf,
                                                     model,
                                                     st_frame,
                                                     image,
+                                                    video_id,
                                                     is_display_tracker,
                                                     tracker,
                                                     )
@@ -153,9 +174,9 @@ class AccidentDetectionHelper:
                         break
             except Exception as e:
                 st.sidebar.error("Error loading video: " + str(e))
-                
+
         elif source == "WIFI cam":
-            st.sidebar.info("Please connect WIFI cam befor use")
+            st.sidebar.info("Please connect WIFI cam before use")
             # Display dropdown to select webcam path
             selected_webcam = st.sidebar.selectbox("Select WIFI cam Path", self.settings.WEBCAM_PATH)
             source_webcam = selected_webcam
@@ -167,10 +188,13 @@ class AccidentDetectionHelper:
                     while vid_cap.isOpened():
                         success, image = vid_cap.read()
                         if success:
+                            # Generate a unique ID for the video
+                            video_id = self.generate_video_id()
                             self._display_detected_frames(conf,
                                                         model,
                                                         st_frame,
                                                         image,
+                                                        video_id,
                                                         is_display_tracker,
                                                         tracker,
                                                         )
